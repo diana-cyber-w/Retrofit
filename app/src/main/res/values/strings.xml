@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">Retrofit</string>
+    <string name="check_favourite_news_btn">check_favourite_news</string>
+    <string name="content_description_favourite_news">Show network news</string>
+    <string name="content_description_news">Show favourite news</string>
+</resources>
