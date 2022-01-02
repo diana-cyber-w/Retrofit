@@ -6,12 +6,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.retrofit.domain.News
 import com.example.retrofit.domain.NewsInteractor
-import com.example.retrofit.utils.prefs.SharedPreferenceManager
 import kotlinx.coroutines.launch
 
 class SharedViewModel(
-    private val interactor: NewsInteractor,
-    private val sharedPreferenceManager: SharedPreferenceManager
+    private val interactor: NewsInteractor
 ) : ViewModel() {
 
     val news: LiveData<List<News>> get() = _news
@@ -23,16 +21,11 @@ class SharedViewModel(
         }
     }
 
-    fun deleteNetworkNews() {
+    fun deleteNews(title: String): List<News>? {
         viewModelScope.launch {
-            _news.value = interactor.deleteNetworkNews()
+            interactor.deleteDataNews(title)
         }
-    }
-
-    fun deleteNews(news: News) {
-        viewModelScope.launch {
-            interactor.deleteDataNews(news)
-        }
+        return _news.value
     }
 
     fun loadDatabaseNews() {

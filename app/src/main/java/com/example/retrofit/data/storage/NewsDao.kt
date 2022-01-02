@@ -1,6 +1,8 @@
 package com.example.retrofit.data.storage
 
-import androidx.room.*
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.Query
 
 @Dao
 interface NewsDao {
@@ -11,6 +13,6 @@ interface NewsDao {
     @Insert
     fun insertNews(news: NewsEntity)
 
-    @Delete
-    fun deleteNews(news: NewsEntity)
+    @Query("DELETE FROM news WHERE title = :title")
+    fun deleteNews(title: String)
 }

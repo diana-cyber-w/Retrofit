@@ -8,8 +8,6 @@ import kotlinx.coroutines.withContext
 
 class NetworkRepositoryImpl(private val newsApi: NewsApi) : NetworkRepository {
 
-    private val emptyNews: List<News> = emptyList()
-
     override suspend fun getEverything(
         query: String?,
         fromDate: String?,
@@ -27,9 +25,5 @@ class NetworkRepositoryImpl(private val newsApi: NewsApi) : NetworkRepository {
                 sortBy = sortBy
             ).articles.map { article -> article.toNews() }
         }
-    }
-
-    override suspend fun deleteNetworkNews(): List<News> {
-        return emptyNews
     }
 }

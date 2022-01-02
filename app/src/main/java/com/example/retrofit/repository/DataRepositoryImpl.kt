@@ -14,19 +14,15 @@ class DataRepositoryImpl(private val newsDao: NewsDao) : DataRepository {
         }
     }
 
-    override suspend fun insertNews(vararg news: News) {
+    override suspend fun insertNews(news: News) {
         withContext(Dispatchers.IO) {
-            news
-                .map { domainMews -> domainMews.toNewsEntity() }
-                .forEach { newsEntity -> newsDao.insertNews(newsEntity) }
+            newsDao.insertNews(news.toNewsEntity())
         }
     }
 
-    override suspend fun deleteNews(vararg news: News) {
+    override suspend fun deleteNews(title: String) {
         withContext(Dispatchers.IO) {
-            news
-                .map { domainMews -> domainMews.toNewsEntity() }
-                .forEach { newsEntity -> newsDao.deleteNews(newsEntity) }
+            newsDao.deleteNews(title)
         }
     }
 }

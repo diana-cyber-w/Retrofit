@@ -22,44 +22,22 @@ class NewsInteractorImpl(
         }
     }
 
-    override suspend fun deleteNetworkNews(): List<News> {
-        return withContext(Dispatchers.IO) {
-            networkRepositoryImpl.deleteNetworkNews()
-        }
-    }
-
     override suspend fun getDataNews(): List<News> {
         return withContext(Dispatchers.IO) {
-//            val savedNews = dataRepositoryImpl.getNews()
-//            val articles = networkRepositoryImpl.getEverything(query = "",
-//                fromDate = null,
-//                toDate = null,
-//                language = "ru",
-//                sortBy = "")
-//            val list: MutableList<News> = mutableListOf()
-//
-//            articles.forEach { item ->
-//                val newItem = savedNews.find { news->
-//                    item.title == news.title
-//                }
-//                if (newItem != null) {
-//                    list.add(newItem)
-//                }
-//            }
-//            return@withContext list
             dataRepositoryImpl.getNews()
         }
     }
 
     override suspend fun insertDataNews(news: News) {
         withContext(Dispatchers.IO) {
-            dataRepositoryImpl.insertNews()
+            dataRepositoryImpl.insertNews(news)
         }
     }
 
-    override suspend fun deleteDataNews(news: News) {
+    override suspend fun deleteDataNews(title: String) {
         withContext(Dispatchers.IO) {
-            dataRepositoryImpl.deleteNews(news)
+            dataRepositoryImpl.deleteNews(title)
         }
     }
+
 }

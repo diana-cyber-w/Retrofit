@@ -1,6 +1,5 @@
 package com.example.retrofit.network
 
-import com.example.retrofit.network.dto.Article
 import com.example.retrofit.network.dto.NewsResponse
 import com.example.retrofit.network.dto.SourceResponse
 import retrofit2.http.GET

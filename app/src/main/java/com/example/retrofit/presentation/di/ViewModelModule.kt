@@ -6,6 +6,6 @@ import org.koin.dsl.module
 
 val sharedViewModelModule = module {
     viewModel {
-        SharedViewModel(interactor = get(), sharedPreferenceManager = get())
+        SharedViewModel(interactor = get())
     }
 }

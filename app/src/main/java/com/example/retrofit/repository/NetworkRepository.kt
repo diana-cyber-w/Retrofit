@@ -10,6 +10,4 @@ interface NetworkRepository {
         language: String?,
         sortBy: String
     ): List<News>
-
-    suspend fun deleteNetworkNews(): List<News>
 }
