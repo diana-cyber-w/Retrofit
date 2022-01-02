@@ -21,7 +21,7 @@ class NewsAdapter(
         val prefs = SharedPreferenceImpl(holder.itemView.context)
         val item = items[position]
         val list = items.toMutableList()
-        list[position] = item.copy(isIconClicked = prefs.getBoolean(position.toString()))
+        list[position] = item.copy(isIconClicked = prefs.getBoolean(items[position].title))
         items = list
 
         holder.bindView(items[position])

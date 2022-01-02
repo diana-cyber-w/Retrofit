@@ -23,15 +23,18 @@ class FavouriteNewsFragment : Fragment(R.layout.favourite_news_layout) {
         override fun onIconClickListener(position: Int) {
             viewModel.onNewsItemClicked(position)
             val prefs = SharedPreferenceImpl(requireContext())
-            viewModel.news.value?.get(position)?.isIconClicked =
-                prefs.getBoolean(position.toString())
-            prefs.saveBoolean(position.toString(), !prefs.getBoolean(position.toString()))
+            val key = viewModel.news.value?.get(position)?.title
 
-            if (prefs.getBoolean(position.toString())) {
+            viewModel.news.value?.get(position)?.isIconClicked =
+                prefs.getBoolean(key.orEmpty())
+            prefs.saveBoolean(key.orEmpty(), !prefs.getBoolean(key.orEmpty()))
+
+            if (prefs.getBoolean(key.orEmpty())) {
                 viewModel.insertNews(viewModel.news.value!![position])
             } else {
                 viewModel.deleteNews(viewModel.news.value?.get(position)!!.title)
             }
+
         }
 
         override fun onItemClickListener(news: News) {
