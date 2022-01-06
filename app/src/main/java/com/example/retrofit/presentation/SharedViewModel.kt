@@ -7,9 +7,10 @@ import androidx.lifecycle.viewModelScope
 import com.example.retrofit.domain.News
 import com.example.retrofit.domain.NewsInteractor
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class SharedViewModel(
-    private val interactor: NewsInteractor
+class SharedViewModel @Inject constructor(
+    private val newsInteractor: NewsInteractor
 ) : ViewModel() {
 
     val news: LiveData<List<News>> get() = _news
@@ -17,26 +18,26 @@ class SharedViewModel(
 
     fun loadNetworkNews() {
         viewModelScope.launch {
-            _news.value = interactor.getNetworkNews()
+            _news.value = newsInteractor.getNetworkNews()
         }
     }
 
     fun deleteNews(title: String): List<News>? {
         viewModelScope.launch {
-            interactor.deleteDataNews(title)
+            newsInteractor.deleteDataNews(title)
         }
         return _news.value
     }
 
     fun loadDatabaseNews() {
         viewModelScope.launch {
-            _news.value = interactor.getDataNews()
+            _news.value = newsInteractor.getDataNews()
         }
     }
 
     fun insertNews(news: News) {
         viewModelScope.launch {
-            interactor.insertDataNews(news)
+            newsInteractor.insertDataNews(news)
         }
     }
 

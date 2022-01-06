@@ -5,8 +5,9 @@ import com.example.retrofit.domain.toNews
 import com.example.retrofit.network.NewsApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-class NetworkRepositoryImpl(private val newsApi: NewsApi) : NetworkRepository {
+class NetworkRepositoryImpl @Inject constructor(private val newsApi: NewsApi) : NetworkRepository {
 
     override suspend fun getEverything(
         query: String?,

@@ -1,15 +1,21 @@
 package com.example.retrofit.network.di
 
+import com.example.retrofit.network.NewsApi
 import com.example.retrofit.network.RetrofitClient
+import com.example.retrofit.repository.NetworkRepository
 import com.example.retrofit.repository.NetworkRepositoryImpl
-import org.koin.dsl.module
+import dagger.Module
+import dagger.Provides
 
-val networkModule = module {
-    single {
-        RetrofitClient.getNewsApi()
-    }
+@Module
+class NetworkModule {
 
-    single {
-        NetworkRepositoryImpl(newsApi = get())
-    }
+    @Provides
+    fun providesNewsApi(): NewsApi = RetrofitClient.getNewsApi()
+
+    @Provides
+    fun providesNetworkRepositoryImpl(
+        newsApi: NewsApi
+    ): NetworkRepository =
+        NetworkRepositoryImpl(newsApi = newsApi)
 }

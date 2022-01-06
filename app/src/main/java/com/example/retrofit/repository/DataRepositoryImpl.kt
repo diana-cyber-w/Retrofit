@@ -6,8 +6,9 @@ import com.example.retrofit.domain.toNews
 import com.example.retrofit.domain.toNewsEntity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-class DataRepositoryImpl(private val newsDao: NewsDao) : DataRepository {
+class DataRepositoryImpl @Inject constructor(private val newsDao: NewsDao) : DataRepository {
     override suspend fun getNews(): List<News> {
         return withContext(Dispatchers.IO) {
             newsDao.getAll().map { newsEntity -> newsEntity.toNews() }

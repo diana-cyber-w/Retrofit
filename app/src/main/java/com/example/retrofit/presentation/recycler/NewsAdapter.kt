@@ -3,8 +3,10 @@ package com.example.retrofit.presentation.recycler
 import android.annotation.SuppressLint
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.retrofit.DaggerApplication
 import com.example.retrofit.domain.News
-import com.example.retrofit.utils.prefs.SharedPreferenceImpl
+import com.example.retrofit.utils.prefs.SharedPreferenceManager
+import javax.inject.Inject
 
 class NewsAdapter(
     private val itemClickListener: OnNewsClickListener
@@ -12,13 +14,19 @@ class NewsAdapter(
 
     private var items: List<News> = emptyList()
 
+    @Inject
+    lateinit var prefs: SharedPreferenceManager
+
+    init {
+        DaggerApplication.appComponent?.inject(this)
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsViewHolder {
         return NewsViewHolder.fromParent(parent, itemClickListener)
     }
 
 
     override fun onBindViewHolder(holder: NewsViewHolder, position: Int) {
-        val prefs = SharedPreferenceImpl(holder.itemView.context)
         val item = items[position]
         val list = items.toMutableList()
         list[position] = item.copy(isIconClicked = prefs.getBoolean(items[position].title))
