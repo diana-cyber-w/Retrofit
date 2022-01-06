@@ -6,22 +6,31 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.example.retrofit.DaggerApplication
 import com.example.retrofit.R
 import com.example.retrofit.domain.News
 import com.example.retrofit.presentation.recycler.NewsAdapter
 import com.example.retrofit.presentation.recycler.OnNewsClickListener
-import com.example.retrofit.utils.prefs.SharedPreferenceImpl
+import com.example.retrofit.utils.prefs.SharedPreferenceManager
 import kotlinx.android.synthetic.main.news_fragment_layout.*
-import org.koin.android.viewmodel.ext.android.sharedViewModel
+import javax.inject.Inject
 
 class NewsFragment : Fragment(R.layout.news_fragment_layout) {
 
-    private val viewModel: SharedViewModel by sharedViewModel()
+    @Inject
+    lateinit var viewModel: SharedViewModel
+
+    @Inject
+    lateinit var prefs: SharedPreferenceManager
+
     private val adapter by lazy { NewsAdapter(newsClickListener) }
+
+    init {
+        DaggerApplication.appComponent?.inject(this)
+    }
 
     private val newsClickListener: OnNewsClickListener = object : OnNewsClickListener {
         override fun onIconClickListener(position: Int) {
-            val prefs = SharedPreferenceImpl(requireContext())
             val key = viewModel.news.value?.get(position)?.title
             viewModel.news.value?.get(position)?.isIconClicked =
                 prefs.getBoolean(key.orEmpty())

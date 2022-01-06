@@ -1,11 +1,16 @@
 package com.example.retrofit.presentation.di
 
+import com.example.retrofit.domain.NewsInteractor
 import com.example.retrofit.presentation.SharedViewModel
-import org.koin.android.viewmodel.dsl.viewModel
-import org.koin.dsl.module
+import dagger.Module
+import dagger.Provides
 
-val sharedViewModelModule = module {
-    viewModel {
-        SharedViewModel(interactor = get())
-    }
+@Module
+class ViewModelModule {
+
+    @Provides
+    fun providesSharedViewModel(
+        interactor: NewsInteractor
+    ): SharedViewModel =
+        SharedViewModel(newsInteractor = interactor)
 }

@@ -2,7 +2,8 @@ package com.example.retrofit.utils.prefs
 
 import android.content.Context
 
-class SharedPreferenceImpl(private val context: Context) : SharedPreferenceManager {
+class SharedPreferenceImpl(private val context: Context) :
+    SharedPreferenceManager {
 
     companion object {
         private const val SHARED_PREFS_NAME = "SHARED_PREFS_NAME"

@@ -1,24 +1,30 @@
 package com.example.retrofit.data.di
 
+import android.content.Context
 import androidx.room.Room
-import com.example.retrofit.repository.DataRepositoryImpl
 import com.example.retrofit.data.storage.AppDatabase
-import org.koin.dsl.module
+import com.example.retrofit.data.storage.NewsDao
+import com.example.retrofit.repository.DataRepository
+import com.example.retrofit.repository.DataRepositoryImpl
+import dagger.Module
+import dagger.Provides
 
-val dataModule = module {
-    single {
+@Module
+class DataModule {
+
+    @Provides
+    fun providesDatabaseBuilder(context: Context) =
         Room.databaseBuilder(
-            get(),
+            context,
             AppDatabase::class.java,
             "news"
         ).build()
-    }
 
-    single {
-        get<AppDatabase>().getNewsDao()
-    }
+    @Provides
+    fun providesNewsDao(appDatabase: AppDatabase): NewsDao =
+        appDatabase.getNewsDao()
 
-    single {
-        DataRepositoryImpl(newsDao = get())
-    }
+    @Provides
+    fun providesDataRepositoryImpl(newsDao: NewsDao): DataRepository =
+        DataRepositoryImpl(newsDao = newsDao)
 }

@@ -1,13 +1,14 @@
 package com.example.retrofit.domain
 
-import com.example.retrofit.repository.DataRepositoryImpl
-import com.example.retrofit.repository.NetworkRepositoryImpl
+import com.example.retrofit.repository.DataRepository
+import com.example.retrofit.repository.NetworkRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-class NewsInteractorImpl(
-    private val networkRepositoryImpl: NetworkRepositoryImpl,
-    private val dataRepositoryImpl: DataRepositoryImpl
+class NewsInteractorImpl @Inject constructor(
+    private val networkRepositoryImpl: NetworkRepository,
+    private val dataRepositoryImpl: DataRepository
 ) : NewsInteractor {
 
     override suspend fun getNetworkNews(): List<News> {

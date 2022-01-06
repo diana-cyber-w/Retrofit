@@ -1,11 +1,15 @@
 package com.example.retrofit.utils.di
 
+import android.content.Context
 import com.example.retrofit.utils.prefs.SharedPreferenceImpl
 import com.example.retrofit.utils.prefs.SharedPreferenceManager
-import org.koin.dsl.module
+import dagger.Module
+import dagger.Provides
 
-val utilsModule = module {
-    single<SharedPreferenceManager> {
-        SharedPreferenceImpl(context = get())
-    }
+@Module
+class UtilsModule {
+
+    @Provides
+    fun providesSharedPreferenceManager(context: Context): SharedPreferenceManager =
+        SharedPreferenceImpl(context)
 }
